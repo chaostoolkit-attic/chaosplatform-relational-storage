@@ -8,10 +8,9 @@ from sqlalchemy import create_engine, event
 from sqlalchemy.engine import Engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy.pool import NullPool, StaticPool
+from sqlalchemy.pool import StaticPool
 from sqlalchemy.schema import MetaData
 from sqlalchemy_utils import force_auto_coercion
-from sqlalchemy_utils.functions import database_exists
 
 __all__ = ["Base", "Factory", "Session", "orm_session", "initialize_storage",
            "release_storage", "configure_storage", "get_secret_key"]
@@ -72,7 +71,7 @@ def release_storage(storage: RelationalStorage):
     Session.remove()
     Factory.close_all()
     storage.engine.dispose()
-    
+
 
 @contextmanager
 def orm_session() -> Session:
@@ -83,7 +82,7 @@ def orm_session() -> Session:
     try:
         yield Session
         Session.commit()
-    except:
+    except Exception:
         Session.rollback()
         raise
     finally:
@@ -121,7 +120,7 @@ def get_engine(config: Dict[str, Any]) -> Engine:
     sa_debug = True if db_config.get("debug") else False
     conn_uri = db_config.get("uri")
 
-    # in most cases, let SQLAlchemy pick the right connection pooling
+    # in most cases, let SQLAlchemy pick the right connection pooling
     pool = None
     connect_args = None
 
