@@ -13,7 +13,10 @@ This is the relational database utility for the [Chaos Platform][chaosplatform].
 
 ## Purpose
 
-* Provide a simple 
+Provide a simple library to work with relational database through
+[SQLAlchemy][sa]. It's unlikely usable in any other context.
+
+[sa]: https://sqlalchemy-utils.readthedocs.io/en/latest/
 
 ## Content
 
