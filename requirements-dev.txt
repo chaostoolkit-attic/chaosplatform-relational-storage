@@ -1,0 +1,8 @@
+requests-mock
+coverage
+pycodestyle
+pytest
+pytest-cov
+pytest-sugar
+pylama
+wheel>=0.32.1
