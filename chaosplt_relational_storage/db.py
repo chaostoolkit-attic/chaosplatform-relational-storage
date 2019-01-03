@@ -71,6 +71,7 @@ def release_storage(storage: RelationalStorage):
     Session.remove()
     Factory.close_all()
     storage.engine.dispose()
+    release_engine(storage.engine)
 
 
 @contextmanager
@@ -150,3 +151,12 @@ def get_engine(config: Dict[str, Any]) -> Engine:
         logger.info("Relational database setup")
 
     return engine
+
+
+def release_engine(engine: Engine):
+    """
+    Remove the engine from known registry.
+    """
+    with _engines_lock:
+        uri = engine.url
+        _engines.pop(str(uri), None)
