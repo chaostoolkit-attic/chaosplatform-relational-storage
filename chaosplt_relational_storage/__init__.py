@@ -5,4 +5,4 @@ from .db import (  # noqa: W0611
 
 __all__ = ["__version__", "configure_storage", "dispose_storage",
            "get_storage", "release_storage", "RelationalStorage"]
-__version__ = '0.1.1'
+__version__ = '0.2.0'

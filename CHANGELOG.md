@@ -2,7 +2,15 @@
 
 ## [Unreleased][]
 
-[Unreleased]: https://github.com/chaostoolkit/chaosplatform-relational-storage/compare/0.1.1...HEAD
+[Unreleased]: https://github.com/chaostoolkit/chaosplatform-relational-storage/compare/0.2.0...HEAD
+
+## [0.2.0][] - 2019-01-11
+
+[0.2.0]: https://github.com/chaostoolkit/chaosplatform-relational-storage/compare/0.1.1....0.2.0
+
+### Added
+
+-   Cleanup API for clarity (initialize_storage => get_storage)
 
 ## [0.1.1][] - 2019-01-03
 
