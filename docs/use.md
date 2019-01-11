@@ -10,13 +10,13 @@ To use it in a Chaos Platform service, you would likel do this:
 from typing import Any, Dict, NoReturn
 
 import attr
-from chaos_relational_storage import initialize_storage, \
+from chaos_relational_storage import get_storage, \
     configure_storage, release_storage
 
 
 class MyServiceStorage:
     def __init__(self, config: Dict[str, Any]):
-        self.driver = init_storage(config)
+        self.driver = get_storage(config)
         configure_storage(self.driver)
 
     def release(self) -> NoReturn:
