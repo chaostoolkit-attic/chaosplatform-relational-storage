@@ -12,8 +12,9 @@ from sqlalchemy.pool import StaticPool
 from sqlalchemy.schema import MetaData
 from sqlalchemy_utils import force_auto_coercion
 
-__all__ = ["Base", "Factory", "Session", "orm_session", "initialize_storage",
-           "release_storage", "configure_storage", "get_secret_key"]
+__all__ = ["Base", "Factory", "Session", "orm_session", "get_storage",
+           "release_storage", "configure_storage", "get_secret_key",
+           "dispose_storage"]
 
 logger = logging.getLogger("chaosplatform")
 Factory = sessionmaker(autocommit=False, autoflush=True)
@@ -42,12 +43,22 @@ class RelationalStorage:
     engine: Engine = attr.ib(default=None)
 
 
-def initialize_storage(config: Dict[str, Any]) -> RelationalStorage:
+def get_storage(config: Dict[str, Any]) -> RelationalStorage:
     """
-    Initialize the storage.
+    Retrieve, and initialize if first time retrieval, the storage.
     """
     engine = get_engine(config)
     return RelationalStorage(engine)
+
+
+def dispose_storage(config: Dict[str, Any]):
+    """
+    Dispose the storage engine entirely
+
+    Do not use the storage once this has been called.
+    """
+    logger.info("Shutting down relational database storage")
+    release_engine(config)
 
 
 def configure_storage(storage: RelationalStorage):
@@ -66,12 +77,14 @@ def configure_storage(storage: RelationalStorage):
 def release_storage(storage: RelationalStorage):
     """
     Release the storage resources.
+
+    Make sure to call `configure_storage` again past this call.
     """
     logger.info("Releasing relational database storage")
     Session.remove()
     Factory.close_all()
-    storage.engine.dispose()
-    release_engine(storage.engine)
+    Base.metadata.clear()
+    Base.metadata.bind = None
 
 
 @contextmanager
@@ -153,10 +166,14 @@ def get_engine(config: Dict[str, Any]) -> Engine:
     return engine
 
 
-def release_engine(engine: Engine):
+def release_engine(config: Dict[str, Any]):
     """
     Remove the engine from known registry.
     """
+    db_config = config.get("db")
+    conn_uri = db_config.get("uri")
+
     with _engines_lock:
-        uri = engine.url
-        _engines.pop(str(uri), None)
+        engine = _engines.pop(conn_uri, None)
+        if engine is not None:
+            engine.dispose()
