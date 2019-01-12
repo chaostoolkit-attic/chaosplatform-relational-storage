@@ -2,7 +2,15 @@
 
 ## [Unreleased][]
 
-[Unreleased]: https://github.com/chaostoolkit/chaosplatform-relational-storage/compare/0.2.0...HEAD
+[Unreleased]: https://github.com/chaostoolkit/chaosplatform-relational-storage/compare/0.2.1...HEAD
+
+## [0.2.1][] - 2019-01-12
+
+[0.2.1]: https://github.com/chaostoolkit/chaosplatform-relational-storage/compare/0.2.0....0.2.1
+
+### Added
+
+-   Add attrs dependency
 
 ## [0.2.0][] - 2019-01-11
 
