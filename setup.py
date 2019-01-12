@@ -35,6 +35,10 @@ test_require = []
 with io.open('requirements-dev.txt') as f:
     test_require = [l.strip() for l in f if not l.startswith('#')]
 
+install_require = []
+with io.open('requirements.txt') as f:
+    install_require = [l.strip() for l in f if not l.startswith('#')]
+
 
 setup(
     name='chaosplatform-relational-storage',
@@ -45,13 +49,20 @@ setup(
     long_description_content_type='text/markdown',
     author='ChaosIQ',
     author_email='contact@chaosiq.io',
-    url='https://github.com/chaostoolkit/chaoshub-relational-storage',
+    url='https://github.com/chaostoolkit/chaosplatform-relational-storage',
     packages=find_packages(),
     include_package_data=True,
+    install_requires=install_require,
     tests_require=test_require,
     setup_requires=pytest_runner,
     zip_safe=False,
     python_requires='>=3.6.*',
+    project_urls={
+        'CI: Travis': 'https://travis-ci.org/chaostoolkit/chaosplatform-relational-storage',
+        'Docs: RTD': 'https://docs.chaosplatform.org',
+        'GitHub: issues': 'https://chaostoolkit/chaostoolkit/chaosplatform-relational-storage/issues',
+        'GitHub: repo': 'https://chaostoolkit/chaostoolkit/chaosplatform-relational-storage'
+    },
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',

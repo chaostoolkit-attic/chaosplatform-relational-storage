@@ -2,7 +2,15 @@
 
 ## [Unreleased][]
 
-[Unreleased]: https://github.com/chaostoolkit/chaosplatform-relational-storage/compare/0.2.1...HEAD
+[Unreleased]: https://github.com/chaostoolkit/chaosplatform-relational-storage/compare/0.2.2...HEAD
+
+## [0.2.2][] - 2019-01-12
+
+[0.2.2]: https://github.com/chaostoolkit/chaosplatform-relational-storage/compare/0.2.1....0.2.2
+
+### Added
+
+-   Bundle dependencies when installing
 
 ## [0.2.1][] - 2019-01-12
 
